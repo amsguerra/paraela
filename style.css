@@ -1,0 +1,299 @@
+:root {
+  --bg: #0b0c0f;
+  --fg: #f3f4f6;
+  --muted: #3f434a;
+  font-family: "Syne", system-ui, sans-serif; 
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.page {
+  min-height: 200vh;
+  padding: 50vh 6vw 30vh;
+  gap: 45vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-family: "Space Grotesk", system-ui, sans-serif; 
+}
+
+.hero {
+  max-width: 980px;
+}
+
+.fill-text {
+  margin: 0;
+  font-size: clamp(42px, 4vw, 48px);
+font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+  font-family: "Syne", system-ui, sans-serif; 
+
+}
+
+.fill-text > span {
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-color: var(--muted);
+  background-image: linear-gradient(135deg, var(--fg) 50%, var(--muted) 60%);
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 0% 200%;
+  color: transparent;
+  display: inline;
+  will-change: background-size;
+}
+
+.credit {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--fg) 70%, transparent);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.credit:hover {
+  color: var(--fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill-text > span {
+    background-size: 200% 200%;
+  }
+}
+
+
+@layer components {
+  .no-offset {
+    margin: 0;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 1024px;
+    padding: 0 16px;
+    margin: 0 auto;
+  }
+
+  .list-text {
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    font-weight: 600;
+    position: sticky;
+    top: calc(50% - 0.5lh);
+    align-self: flex-start; /* this is important to make sticky work in a flex container */
+    min-width: max-content;
+  }
+
+  .list {
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    font-weight: 600;
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .list li {
+    line-height: 1.25;
+  }
+
+  .list-container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 48px;
+  }
+}
+
+@layer text-effect {
+  :root {
+    --count: 15;
+    --end: 360;
+    --step: calc(var(--end) / var(--count));
+  }
+
+  .list li:not(:last-of-type) {
+    color: oklch(65% 0.3 calc(var(--i) * var(--step)));
+  }
+
+  @supports (animation-timeline: scroll()) and (animation-range: 0% 100%) {
+    .list li:first-of-type {
+      --start-opacity: 1;
+    }
+
+    .list li:last-of-type {
+      --end-opacity: 1;
+    }
+
+    .list li {
+      opacity: 0.2;
+      animation-name: brighten;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+
+      animation-timeline: view();
+      animation-range: cover calc(50% - 1lh) calc(50% + 1lh);
+    }
+
+    @keyframes brighten {
+      0% {
+        opacity: var(--start-opacity, 0.2);
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: var(--end-opacity, 0.2);
+      }
+    }
+  }
+}
+
+@layer snap {
+  html,
+  body {
+    scroll-snap-type: y proximity;
+    scroll-behavior: smooth;
+  }
+
+  .list li {
+    scroll-snap-align: center;
+  }
+}
+
+@layer responsive {
+  @media (max-width: 600px) {
+    .list-container {
+      column-gap: 12px;
+    }
+  }
+}
+
+
+
+section.fotoss {
+  display: grid;
+  place-content: center;
+  height: 100vh;
+}
+
+.glow-button {
+  display: inline-block;
+  text-decoration: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 20px 40px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff1e56, #8a2be2, #00c2ff, #31ff7a);
+  background-size: 300% 300%;
+  box-shadow:
+    0 0 12px rgba(255, 30, 86, 0.7),
+    0 0 22px rgba(138, 43, 226, 0.6),
+    0 0 34px rgba(0, 194, 255, 0.6);
+  animation: glow-colors 4s linear infinite;
+  transition: transform 0.2s ease;
+}
+
+.glow-button:hover {
+  transform: scale(1.05);
+}
+
+@keyframes glow-colors {
+  0% {
+    background-position: 0% 50%;
+    box-shadow:
+      0 0 12px rgba(255, 30, 86, 0.7),
+      0 0 22px rgba(138, 43, 226, 0.6),
+      0 0 34px rgba(0, 194, 255, 0.6);
+  }
+  50% {
+    background-position: 100% 50%;
+    box-shadow:
+      0 0 14px rgba(49, 255, 122, 0.8),
+      0 0 24px rgba(0, 194, 255, 0.7),
+      0 0 36px rgba(255, 30, 86, 0.6);
+  }
+  100% {
+    background-position: 0% 50%;
+    box-shadow:
+      0 0 12px rgba(255, 30, 86, 0.7),
+      0 0 22px rgba(138, 43, 226, 0.6),
+      0 0 34px rgba(0, 194, 255, 0.6);
+  }
+}
+
+img {
+  height: 100vh;
+}
+
+h2 {
+  font-size: 4em;
+  font-family: sans-serif;
+  text-transform: capitalize;
+}
+
+.img-carousel {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+/* for tutorial link only */
+.links {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  font-weight: 600;
+  font-size: 1.2em;
+  border-radius: 15px;
+  background-color: white;
+  padding: 5px;
+  line-height: 1.3;
+  border: 5px black;
+  border-style: groove;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a img.icon {
+  display: inline-block;
+  margin-left: 0.4rem;
+  height: 40px;
+}
+
+
+/* Support me */
+#support {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+}
