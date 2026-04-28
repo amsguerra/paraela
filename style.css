@@ -30,7 +30,7 @@ body {
 
 .fill-text {
   margin: 0;
-  font-size: clamp(42px, 4vw, 48px);
+  font-size: 65px;
 font-weight: 600;
   line-height: 1.15;
   letter-spacing: -0.01em;
@@ -93,7 +93,7 @@ font-weight: 600;
   }
 
   .list-text {
-    font-size: clamp(2.5rem, 6vw, 6rem);
+    font-size: clamp(5rem, 6vw, 6rem);
     font-weight: 600;
     position: sticky;
     top: calc(50% - 0.5lh);
@@ -102,7 +102,7 @@ font-weight: 600;
   }
 
   .list {
-    font-size: clamp(2.5rem, 6vw, 6rem);
+    font-size: clamp(5rem, 6vw, 6rem);
     font-weight: 600;
     list-style-type: none;
     padding: 0;
@@ -185,7 +185,11 @@ font-weight: 600;
   }
 }
 
-
+@media screen and (max-width: 800px) {
+  .glow-button {
+    font-size: 3.15rem !important;}
+  
+}
 
 section.fotoss {
   display: grid;
@@ -199,8 +203,8 @@ section.fotoss {
   border: 0;
   border-radius: 999px;
   padding: 20px 40px;
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-size: 5.15rem;
+  font-weight: 100;
   color: #ffffff;
   cursor: pointer;
   background: linear-gradient(135deg, #ff1e56, #8a2be2, #00c2ff, #31ff7a);
